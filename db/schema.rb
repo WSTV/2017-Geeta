@@ -11,6 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20121013065027) do
+
+  create_table "concepts", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "item_concepts", :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "concept_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "item_concepts", ["concept_id"], :name => "index_item_concepts_on_concept_id"
+  add_index "item_concepts", ["item_id"], :name => "index_item_concepts_on_item_id"
+
+  create_table "items", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "author"
+    t.string   "email"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "link"
+  end
 
 end

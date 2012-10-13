@@ -1,0 +1,40 @@
+<div id="ytapiplayer">
+    You need Flash player 8+ and JavaScript enabled to view this video.
+</div>
+
+<script type="text/javascript">
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "ytplayer" };
+    swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3", "ytapiplayer", "425", "356", "8", null, null, params, atts);
+</script>
+
+
+
+<a id="ytplayer"></a>
+<% @items = [] %>
+<% @items.each do |item| %>
+    <h1><%= item.title %></h1>
+    <br />
+    <!--<iframe width="420" height="315" src="http://www.youtube.com/embed/<%= item.link %>" frameborder="0" allowfullscreen></iframe>--> 
+    <!--<iframe id="ytplayer" width="420" height="315" src="http://www.youtube.com/v/<%= item.link %>?enablejsapi=1&version=3&playerapiid=ytplayer" frameborder="0" allowfullscreen></iframe>-->
+    <br />
+    <%= item.description %>
+    <br />
+    Author: <%= item.author %>
+    Contact: <%= item.email %>
+<% end %>
+
+<br />
+<br />
+<br />
+<%= link_to 'Publishers >>', new_item_path %>
+
+<script>
+
+function onYouTubePlayerReady(playerId) {
+  var video_ids = <%= raw @item_link_ids.to_json %>;
+  console.log(video_ids);
+  player = document.getElementById("ytplayer");
+  player.loadPlaylist({playlist:video_ids, index:0, startSeconds:0, suggestedQuality:'medium'});   
+}
+</script>
