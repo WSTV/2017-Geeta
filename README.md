@@ -1,0 +1,4 @@
+minimal
+=======
+
+A minimal MVP
