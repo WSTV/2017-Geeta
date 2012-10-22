@@ -2,13 +2,27 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    logger.info params
+    @items = Item.all.select{|i| i.concepts.select{|c| c.id == params[:interest].strip.to_i}.size > 0 && i.concepts.select{|c| c.id == params[:location].strip.to_i}.size > 0}
     @item_link_ids = @items.map{|i| i.link}
     @item_titles = @items.map{|i| i.title}
     @item_descriptions = @items.map{|i| i.description}
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @items }
+    end
+  end
+
+  # GET /items/choose
+  # GET /items/choose
+  def choose
+    @interests = Concept.all.select{|c| c.category == "Interest"}
+    @locations = Concept.all.select{|l| l.category == "Location"}
+    @businesses = Concept.all.select{|b| b.category == "Business"}
+
+    respond_to do |format|
+      format.html # choose.html.erb
+      format.json { render json: @item }
     end
   end
 

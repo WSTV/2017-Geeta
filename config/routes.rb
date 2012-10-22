@@ -1,5 +1,9 @@
 Minimal::Application.routes.draw do
+
+  match '/items/choose', :controller => 'items', :action => 'choose'
+  
   resources :items
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
