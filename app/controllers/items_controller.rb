@@ -4,7 +4,8 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
     @item_link_ids = @items.map{|i| i.link}
-
+    @item_titles = @items.map{|i| i.title}
+    @item_descriptions = @items.map{|i| i.description}
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @items }

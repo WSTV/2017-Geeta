@@ -9,7 +9,7 @@
 </script>
 
 
-
+<div id="associated_content"></div>
 <a id="ytplayer"></a>
 <% @items = [] %>
 <% @items.each do |item| %>
@@ -31,10 +31,40 @@
 
 <script>
 
+var associated_content;
+var player;
+var video_ids;
+var video_titles;
+
 function onYouTubePlayerReady(playerId) {
-  var video_ids = <%= raw @item_link_ids.to_json %>;
+  video_ids = <%= raw @item_link_ids.to_json %>;
+  video_titles = <%= raw @item_titles.to_json %>;
+  video_descriptions = <%= raw @item_descriptions.to_json %>;
   console.log(video_ids);
   player = document.getElementById("ytplayer");
   player.loadPlaylist({playlist:video_ids, index:0, startSeconds:0, suggestedQuality:'medium'});   
+  player.addEventListener('onStateChange', 'onYouTubePlayerStateChange');
 }
+
+function onYouTubePlayerStateChange(newState) {
+   console.log("Player's new state: " + newState);
+  if(newState == 3) {
+     //video is in buffering state
+     console.log("reached buffering state");
+     associated_content = "temp content";  
+   }
+   else if(newState == 1) {
+     //video is in playing state
+     console.log("reached playing state");
+     if(player) {
+       url = player.getVideoUrl();
+       id = (url.split("v=")[1]).split('&')[0];
+       index = video_ids.indexOf(id);
+       associated_content = "<div id='associated_content'><h3>" + video_titles[index] + "</h3><p>" + video_descriptions[index] + "</p></div>";
+       console.log(url + " and the id is " + id + "and title is" + associated_content);
+       $("#associated_content").html(associated_content);
+     }
+   }
+}
+
 </script>
