@@ -41,6 +41,10 @@ class ItemsController < ApplicationController
   # GET /items/new.json
   def new
     @item = Item.new
+    @interests = Concept.all.select{|c| c.category == "Interest"}
+    @locations = Concept.all.select{|l| l.category == "Location"}
+    @businesses = Concept.all.select{|b| b.category == "Business"}
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -57,12 +61,26 @@ class ItemsController < ApplicationController
   # POST /items.json
   def create
     @item = Item.new(params[:item])
+    logger.info params
+    logger.info "just printed create params"
     # saving the id of the youtube video instead of the link
     if(params[:item] && params[:item][:link] && (params[:item][:link].include? "v=")) # youtube long url has been provided
       @item.link = (params[:item][:link].split('v=')[1]).split('&')[0]
     end
+    if(params[:interests] && params[:locations])
+      params[:interests].each do |interest|
+        concept = Concept.find(interest)
+        @item.concepts << concept
+      end
+      params[:locations].each do |location|
+        concept = Concept.find(location)
+        @item.concepts << concept
+      end
+    end
+    logger.info @item
+    logger.info @item.concepts
     respond_to do |format|
-      if @item.save
+     if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render json: @item, status: :created, location: @item }
       else

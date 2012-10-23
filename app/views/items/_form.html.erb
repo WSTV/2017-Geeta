@@ -20,6 +20,13 @@
     <%= f.text_field :link, :class => 'span6'%>
   </div>
   <div class="field">
+    <%= f.label 'interests[]', 'Select interest tags' %>
+    <%= select_tag "interests[]", options_from_collection_for_select(@interests, "id", "name"), :class => 'span6', :multiple => true %>
+  <div class="field">
+    <%= f.label 'locations[]', 'Select geo tags' %>
+    <%= select_tag "locations[]", options_from_collection_for_select(@locations, "id", "name"), :class => 'span6', :multiple => true %> 
+  </div>
+  <div class="field">
     <%= f.label :description %>
     <%= f.text_area :description, :class => 'span6' %>
   </div>
