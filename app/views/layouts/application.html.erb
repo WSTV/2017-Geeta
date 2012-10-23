@@ -3,13 +3,27 @@
 <head>
   <title>Minimal</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "bootstrap.min", :media => "all" %>  
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "swfobject" %> 
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="/items/choose">321Media</a>
+    <ul class="nav">
+      <li id="home-nav-tab"><a href="/items/choose">Home</a></li>
+      <li id="channels-nav-tab"><a href="/items">Channels</a></li>
+      <li id="publishers-nav-tab"><a href="/items/new">Publishers</a></li>
+    </ul>
+  </div>
+</div>
 
 <%= yield %>
 
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <%= javascript_include_tag "bootstrap.min" %>
 </body>
 </html>

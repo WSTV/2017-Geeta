@@ -1,9 +1,15 @@
-<p id="notice"><%= notice %></p>
-Hi, there! Welcome to 321Media. 
-
-<h3>What would you like in your channel?</h3>
-<%= form_tag '/items', :method => 'get' do %>
-  <%= select_tag "interest", options_from_collection_for_select(@interests, "id", "name"), :prompt => "Select an interest" %>
-  <%= select_tag "location", options_from_collection_for_select(@locations, "id", "name"), :prompt => "Select a location" %><hr>
-  <%= submit_tag 'Get my channel' %>
-<% end %>
+<div class="container">
+  <p id="notice"><%= notice %></p>
+  <div class="well span6" style="background-color:#2c2c2c;color:#eee;border:none">
+    Hi, there! Welcome to 321Media, your home for personalized and localized channels. 
+  </div>
+  <div class="well span6">
+    <h3>What would you like in your channel?</h3>
+    <%= form_tag '/items', :method => 'get' do %>
+      <%= select_tag "interest", options_from_collection_for_select(@interests, "id", "name"), :prompt => "Select an interest" %>
+      <%= select_tag "location", options_from_collection_for_select(@locations, "id", "name"), :prompt => "Select a location", :class => 'pull-right' %>
+      <br/><br/>
+      <%= submit_tag 'Load my channel', :class => 'btn btn-inverse pull-right' %>
+    <% end %>
+  </div>
+</div>
