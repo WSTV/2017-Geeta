@@ -2,6 +2,8 @@ Minimal::Application.routes.draw do
 
   match '/items/choose', :controller => 'items', :action => 'choose'
   
+  match '/items/admin', :controller => 'items', :action => 'admin'
+
   resources :items
 
 

@@ -1,9 +1,25 @@
 class ItemsController < ApplicationController
+
+  # GET /items/admin
+  # GET /items/admin.json
+  def admin
+    @items = Item.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @items }
+    end
+  end
+
+
   # GET /items
   # GET /items.json
   def index
     logger.info params
-    @items = Item.all.select{|i| i.concepts.select{|c| c.id == params[:interest].strip.to_i}.size > 0 && i.concepts.select{|c| c.id == params[:location].strip.to_i}.size > 0}
+    if(params[:interest] == nil || params[:location] == nil)
+      @items = Item.all
+    else
+      @items = Item.all.select{|i| i.concepts.select{|c| c.id == params[:interest].strip.to_i}.size > 0 && i.concepts.select{|c| c.id == params[:location].strip.to_i}.size > 0}
+    end
     @item_link_ids = @items.map{|i| i.link}
     @item_titles = @items.map{|i| i.title}
     @item_descriptions = @items.map{|i| i.description}
@@ -14,7 +30,7 @@ class ItemsController < ApplicationController
   end
 
   # GET /items/choose
-  # GET /items/choose
+  # GET /items/choose.json
   def choose
     @interests = Concept.all.select{|c| c.category == "Interest"}
     @locations = Concept.all.select{|l| l.category == "Location"}
