@@ -90,3 +90,9 @@ ItemConcept.create(:item_id => politics_media.id, :concept_id => politics.id)
 ItemConcept.create(:item_id => politics_media.id, :concept_id => ch.id)
 ItemConcept.create(:item_id => politics_media.id, :concept_id => commercial.id)
 
+
+# using youtube_it gem to pull videos from youtube api: https://github.com/kylejginavan/youtube_it
+# client = YouTubeIt::Client.new
+# result = client.videos_by(:query => 'Sports')
+# videos = result.videos
+# videos.first.player_url
